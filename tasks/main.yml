@@ -1,0 +1,49 @@
+---
+# deploy rhamt web console on OpenShift
+- debug:
+    msg:
+      - Openshift project
+      - -> Create Openshift project ({{ OCP_PROJECT }})
+
+- name: Create Openshift project
+  shell: |
+     oc new-project {{ OCP_PROJECT }} > /dev/null
+     sleep 1
+     oc project {{ OCP_PROJECT }} > /dev/null
+     sleep 1
+     oc policy add-role-to-user view system:serviceaccount:{{ OCP_PROJECT }}:eap-service-account -n {{ OCP_PROJECT }}
+     oc policy add-role-to-user view system:serviceaccount:{{ OCP_PROJECT }}:sso-service-account -n {{ OCP_PROJECT }}
+     sleep 1
+  ignore_errors: true
+
+#- name: Read a template json file
+#  include_vars:
+#    file: templates/web-template.json
+#    name: web-template
+
+#- debug: var=variable
+
+- debug:
+    msg:  -> Process RHAMT Web Template
+# Template adapted from https://github.com/jboss-container-images/redhat-sso-7-openshift-image/blob/sso72-dev/templates/sso72-postgresql-persistent.json
+- name: Process RHAMT Web Template
+  include_vars:
+    file: templates/web-template.json
+    name: web-template
+  shell: |
+ #    oc process -f templates/web-template.json \
+     oc process -f {{ web-template }} \
+          -p SSO_REALM=rhamt \
+          -p POSTGRESQL_MAX_CONNECTIONS=200 \
+          -p DB_DATABASE={{ DB_DATABASE }} \
+          -p DB_USERNAME={{ DB_USERNAME }} \
+          -p DB_PASSWORD={{ DB_PASSWORD }} \
+          -p VOLUME_CAPACITY={{ RHAMT_VOLUME_CAPACITY }} \
+          -p REQUESTED_CPU={{ REQUESTED_CPU }} \
+          -p REQUESTED_MEMORY={{ REQUESTED_MEMORY }} \
+          -p DOCKER_IMAGES_TAG={{ DOCKER_IMAGES_TAG }} | oc create -n {{ OCP_PROJECT }} -f -
+     sleep 1
+  ignore_errors: true
+
+
+

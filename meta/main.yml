@@ -1,0 +1,19 @@
+galaxy_info:
+  author: Daniel Oh
+  description: Red Hat Application Migration Toolkit
+  company: Red Hat
+  license: license (Apache)
+  min_ansible_version: 2.4
+  platforms:
+   - name: Linux
+     versions:
+     - all
+
+  galaxy_tags: 
+     - cloudnative
+     - ccnworkshop
+     - rhamt
+     - redhat
+     - migration
+
+dependencies: []
