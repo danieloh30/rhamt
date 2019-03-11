@@ -1,6 +1,6 @@
 ---
 # defaults file for redhat_migration_toolkit
-OCP_PROJECT: rhamt-doh
+OCP_PROJECT: labs-infra
 RHAMT_VOLUME_CAPACITY: 10Gi
 REQUESTED_CPU: 1
 REQUESTED_MEMORY: 2Gi
