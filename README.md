@@ -1,7 +1,7 @@
-Role Name
+Ansible Role:Red Hat Application Migration Toolkit on OpenShift
 =========
 
-A brief description of the role goes here.
+This role for deploying RHAMT Web console on OpenShift.
 
 Requirements
 ------------
