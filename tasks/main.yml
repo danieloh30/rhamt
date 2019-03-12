@@ -1,4 +1,5 @@
 ---
+
 # deploy rhamt web console on OpenShift
 - debug:
     msg:
