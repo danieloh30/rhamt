@@ -1,10 +1,10 @@
 ---
 # deploy rhamt web console on OpenShift
-
 - debug:
     msg:
       - Openshift project
       - -> Check if {{ OCP_PROJECT }} project exists
+      
 - name: check if {{ OCP_PROJECT }} project exists
   shell: "oc get project {{ OCP_PROJECT }}"
   register: labs_infra_project_result
