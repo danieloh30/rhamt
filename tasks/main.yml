@@ -1,11 +1,22 @@
 ---
 # deploy rhamt web console on OpenShift
+
+- debug:
+    msg:
+      - Openshift project
+      - -> Check if {{ OCP_PROJECT }} project exists
+- name: check if {{ OCP_PROJECT }} project exists
+  shell: "oc get project {{ OCP_PROJECT }}"
+  register: labs_infra_project_result
+  ignore_errors: true
+  changed_when: false
+
 - debug:
     msg:
       - Openshift project
       - -> Create Openshift project ({{ OCP_PROJECT }})
 
-- name: Create Openshift project
+- name: create {{ OCP_PROJECT }} project
   shell: |
      oc new-project {{ OCP_PROJECT }} > /dev/null
      sleep 1
@@ -14,7 +25,7 @@
      oc policy add-role-to-user view system:serviceaccount:{{ OCP_PROJECT }}:eap-service-account -n {{ OCP_PROJECT }}
      oc policy add-role-to-user view system:serviceaccount:{{ OCP_PROJECT }}:sso-service-account -n {{ OCP_PROJECT }}
      sleep 1
-  ignore_errors: true
+  when: labs_infra_project_result is failed
 
 - debug:
     msg:  -> Process RHAMT Web Template
