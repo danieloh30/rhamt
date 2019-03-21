@@ -1,38 +1,69 @@
 Ansible Role:Red Hat Application Migration Toolkit on OpenShift
 =========
 
-This role for deploying RHAMT Web console on OpenShift.
-
-Requirements
-------------
-
-Any pre-requisites that may not be covered by Ansible itself or the role should be mentioned here. For instance, if the role uses the EC2 module, it may be a good idea to mention in this section that the boto package is required.
+This role for deploying RHAMT Web console with integrating RH-SSO on OpenShift.
 
 Role Variables
---------------
-
-A description of the settable variables for this role should go here, including any variables that are in defaults/main.yml, vars/main.yml, and any variables that can/should be set via parameters to the role. Any variables that are read from other roles and/or the global scope (ie. hostvars, group vars, etc.) should be mentioned here as well.
-
-Dependencies
 ------------
 
-A list of other roles hosted on Galaxy should go here, plus any details in regards to parameters that may need to be set for other roles, or variables that are used from other roles.
+| Variable                    | Default Value      | Required |  Description   |
+|-----------------------------|--------------------|----------|----------------|
+|`OCP_PROJECT`                | `rhamt`            | Required | OpenShift project name to provision this role |
+|`RHAMT_VOLUME_CAPACITY`      | `10Gi`             | Optional | Persistance volume capacity of RHAMT Pod |
+|`REQUESTED_CPU`              | `1`                | Optional | Requested CPU resources of RHAMT Pod |
+|`REQUESTED_MEMORY`           | `2Gi`              | Optional | Requested MEMORY resources of RHAMT Pod |
+|`DB_DATABASE`                | `WindupServicesDS` | Optional | PostgreSQL Database name |
+|`DB_USERNAME`                | `postgresuser`     | Optional | PostgreSQL Database username |
+|`DB_PASSWORD`                | `postgrespassword` | Optional | PostgreSQL Database password |
+|`APP`                        | `rhamt-web-console`| Optional | RHAMT Pod's application name |
+|`APP_DIR`                    | `app`              | Optional | RHAMT Pod's application directory path |
+|`DOCKER_IMAGES_TAG`          | `4.2.0.Final`      | Optional | RHAMT container image tag in Quay.io |
+
+OpenShift Version Compatibility
+------------
+When listing this role in `requirements.yml`, make sure to pin the version of the role via one of the tags:
+
+```
+- src: danieloh30.rhamt
+  version: 1.0.0
+```  
+
+The following tables shows the version combinations that are tested and verified:
+
+| Role Version      | OpenShift Version |
+|-------------------|-------------------|
+| 1.0.0   | 3.11.x  |
+
+Note that if a version combination is not listed above, it does **NOT** mean that it won't work on that 
+version. The above table is merely the combinations that we have verified and tested.
+
 
 Example Playbook
-----------------
+------------
 
-Including an example of how to use your role (for instance, with variables passed in as parameters) is always nice for users too:
+```
+name: Example Playbook
+hosts: localhost
+tasks:
+- import_role:
+    name: danieloh30.rhamt
+  vars:
+    OCP_PROJECT: "rhamt"
+```
 
-    - hosts: servers
-      roles:
-         - { role: username.rolename, x: 42 }
+Test locally
+------------
+If you want to test this role locally:
 
-License
--------
+```
+ansible-playbook -i tests/inventory tests/role_provision.yml \
+        -e OCP_PROJECT=rhamt \
+```
 
-BSD
+__NOTE:__ Add as many parameter variations from the defaults as you want
 
-Author Information
-------------------
-
-An optional section for the role authors to include contact information, or a website (HTML is not allowed).
+If you want to delete all RH-SSO users like userxx locally:
+```
+ansible-playbook -i tests/inventory tests/rhsso_delete_users.yml \
+        -e OCP_PROJECT=rhamt \
+```
