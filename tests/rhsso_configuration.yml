@@ -3,7 +3,7 @@
   vars:
     infrasvcs_gogs_user_count: 50
     gogs_pwd: openshift
-    namespace: rhamt
+    namespace: labs-infra
     apps_hostname_suffix: apps.seoul-250a.openshiftworkshop.com
 
   tasks:
