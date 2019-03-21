@@ -1,0 +1,51 @@
+- hosts: localhost
+  vars:
+    namespace: rhamt
+    apps_hostname_suffix: apps.seoul-250a.openshiftworkshop.com
+
+  tasks:
+    - name: Get access token to remove RH-SSO users
+      uri: 
+        url: https://secure-rhamt-web-console-{{ namespace }}.{{ apps_hostname_suffix }}/auth/realms/master/protocol/openid-connect/token
+        method: POST
+        body: "username=admin&password=password&grant_type=password&client_id=admin-cli"
+        status_code: 200, 201
+        force_basic_auth: true
+        validate_certs: no
+        return_content: yes
+        headers:
+          Content-Type: "application/x-www-form-urlencoded"
+      register: result_token
+
+    - name: Retrieve RH-SSO user's ID list
+      uri: 
+        url: https://secure-rhamt-web-console-{{ namespace }}.{{ apps_hostname_suffix }}/auth/admin/realms/rhamt/users
+        method: GET
+        status_code: 200, 201, 409
+        force_basic_auth: true
+        validate_certs: no
+        return_content: yes
+        headers:
+          Accept: "application/json"
+          Authorization: "Bearer {{ result_token.json.access_token }}"
+      ignore_errors: true
+      when: result_token.json.access_token != ""
+      register: result_useridlist
+
+    - name: Delete all RH-SSO users like userxx
+      uri: 
+        url: https://secure-rhamt-web-console-{{ namespace }}.{{ apps_hostname_suffix }}/auth/admin/realms/rhamt/users/{{ item.id }}
+        method: DELETE
+        status_code: 204
+        force_basic_auth: true
+        validate_certs: no
+        headers:
+          Content-Type: "application/json"
+          Accept: "application/json"
+          Authorization: "Bearer {{ result_token.json.access_token }}"
+      ignore_errors: true
+      with_items: "{{ result_useridlist.json }}"
+      when: item.username != "rhamt"
+
+
+
