@@ -57,7 +57,7 @@ If you want to test this role locally:
 
 ```
 ansible-playbook -i tests/inventory tests/role_provision.yml \
-        -e OCP_PROJECT=rhamt \
+        -e OCP_PROJECT=rhamt
 ```
 
 __NOTE:__ Add as many parameter variations from the defaults as you want
@@ -65,5 +65,5 @@ __NOTE:__ Add as many parameter variations from the defaults as you want
 If you want to delete all RH-SSO users like userxx locally:
 ```
 ansible-playbook -i tests/inventory tests/rhsso_delete_users.yml \
-        -e OCP_PROJECT=rhamt \
+        -e OCP_PROJECT=rhamt
 ```
