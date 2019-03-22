@@ -1,6 +1,6 @@
 - hosts: localhost
   vars:
-    namespace: rhamt
+    namespace: labs-infra
     apps_hostname_suffix: apps.seoul-250a.openshiftworkshop.com
 
   tasks:
