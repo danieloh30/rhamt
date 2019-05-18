@@ -17,7 +17,7 @@ Role Variables
 |`DB_PASSWORD`                | `postgrespassword` | Optional | PostgreSQL Database password |
 |`APP`                        | `rhamt-web-console`| Optional | RHAMT Pod's application name |
 |`APP_DIR`                    | `app`              | Optional | RHAMT Pod's application directory path |
-|`DOCKER_IMAGES_TAG`          | `4.2.0.Final`      | Optional | RHAMT container image tag in Quay.io |
+|`DOCKER_IMAGES_TAG`          | `4.2.1.Final`      | Optional | RHAMT container image tag in Quay.io |
 
 OpenShift Version Compatibility
 ------------
