@@ -21,6 +21,7 @@ Role Variables
 
 OpenShift Version Compatibility
 ------------
+
 When listing this role in `requirements.yml`, make sure to pin the version of the role via one of the tags:
 
 ```
