@@ -26,14 +26,14 @@ When listing this role in `requirements.yml`, make sure to pin the version of th
 
 ```
 - src: danieloh30.rhamt
-  version: 1.1.0
+  version: 1.2.0
 ```  
 
 The following tables shows the version combinations that are tested and verified:
 
 | Role Version      | OpenShift Version |
 |-------------------|-------------------|
-| 1.1.0   | 3.11.x  |
+| 1.2.0   | 3.11.x  |
 
 Note that if a version combination is not listed above, it does **NOT** mean that it won't work on that 
 version. The above table is merely the combinations that we have verified and tested.
