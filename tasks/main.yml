@@ -33,7 +33,7 @@
 # Template adapted from https://github.com/jboss-container-images/redhat-sso-7-openshift-image/blob/sso72-dev/templates/sso72-postgresql-persistent.json
 - name: Process RHAMT Web Template
   shell: |
-     oc process -f https://raw.githubusercontent.com/danieloh30/rhamt/1.0.0/templates/web-template.json \
+     oc process -f https://raw.githubusercontent.com/danieloh30/rhamt/1.2.0/templates/web-template.json \
           -p SSO_REALM=rhamt \
           -p POSTGRESQL_MAX_CONNECTIONS=200 \
           -p DB_DATABASE={{ DB_DATABASE }} \
