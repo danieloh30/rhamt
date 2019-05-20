@@ -64,7 +64,7 @@
             "displayName": "RHAMT Volume Capacity",
             "description": "Size of persistent storage for RHAMT volume.",
             "name": "RHAMT_VOLUME_CAPACITY",
-            "value": "20G",
+            "value": "10G",
             "required": true
         },
         {
@@ -92,7 +92,7 @@
             "displayName": "Database Volume Capacity",
             "description": "Size of persistent storage for database volume.",
             "name": "VOLUME_CAPACITY",
-            "value": "20G",
+            "value": "10G",
             "required": true
         },
         {
